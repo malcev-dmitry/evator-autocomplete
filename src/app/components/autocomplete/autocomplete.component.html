@@ -1,0 +1,11 @@
+<ng-select [items]="suggestions$ | async"
+           bindLabel="value"
+           [addTag]="true"
+           [multiple]="true"
+           [hideSelected]="true"
+           [trackByFn]="trackByFn"
+           [minTermLength]="2"
+           [loading]="suggestionsLoading"
+           [typeahead]="suggestionsInput$"
+           [(ngModel)]="selectedSuggestions">
+</ng-select>

@@ -1,0 +1,28 @@
+<div class="form-group">
+
+  <form [formGroup]="formGroup">
+    <mat-form-field class="form-control">
+      <mat-label>Code</mat-label>
+      <input matInput formControlName="postalCode" placeholder="code">
+    </mat-form-field>
+
+    <mat-form-field class="form-control">
+      <mat-label>City</mat-label>
+      <input matInput formControlName="city" placeholder="city">
+    </mat-form-field>
+
+    <mat-form-field class="form-control">
+      <mat-label>Street</mat-label>
+      <input matInput formControlName="street" placeholder="street">
+    </mat-form-field>
+
+    <mat-form-field class="form-control">
+      <mat-label>House</mat-label>
+      <input matInput formControlName="house" placeholder="house">
+    </mat-form-field>
+
+  </form>
+
+  <app-autocomplete [formGroup]="formGroup"></app-autocomplete>
+
+</div>
