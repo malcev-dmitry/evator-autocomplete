@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-info-form',
@@ -10,14 +10,14 @@ export class InfoFormComponent implements OnInit {
 
   public formGroup: FormGroup;
 
-  constructor() { }
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.formGroup = new FormGroup({
-      postalCode: new FormControl(''),
-      city: new FormControl(''),
-      street: new FormControl(''),
-      house: new FormControl(''),
+    this.formGroup = this.fb.group({
+      postal_code: [''],
+      city: [''],
+      street: [''],
+      house: [''],
     });
   }
 

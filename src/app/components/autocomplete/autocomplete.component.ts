@@ -1,15 +1,14 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
-import {FormGroup} from '@angular/forms';
-import {ApiDataService} from '../../services/api-data.service';
-import {concat, Observable, of, Subject} from 'rxjs';
-import {catchError, debounceTime, switchMap, tap} from 'rxjs/operators';
-import {SuggestionInterface} from '../../services/dadata.interface';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { ApiDataService } from '../../services/api-data.service';
+import { concat, Observable, of, Subject } from 'rxjs';
+import { catchError, debounceTime, switchMap, tap } from 'rxjs/operators';
+import { SuggestionInterface } from '../../services/dadata.interface';
 
 @Component({
   selector: 'app-autocomplete',
   templateUrl: './autocomplete.component.html',
   styleUrls: ['./autocomplete.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AutocompleteComponent implements OnInit {
 
@@ -34,14 +33,10 @@ export class AutocompleteComponent implements OnInit {
 
     const lastSelectedSuggestionIndex = this.privateSelectedSuggestions.length - 1;
 
-    this.formGroup.controls.postalCode.setValue(value[lastSelectedSuggestionIndex].data.postal_code || 'не указан');
-    this.formGroup.controls.city.setValue(value[lastSelectedSuggestionIndex].data.city || 'не указан');
-    this.formGroup.controls.street.setValue(value[lastSelectedSuggestionIndex].data.street || 'не указана');
-    this.formGroup.controls.house.setValue(value[lastSelectedSuggestionIndex].data.house || 'не указан');
+    this.formGroup.patchValue(value[lastSelectedSuggestionIndex].data);
   }
 
-  constructor(private cd: ChangeDetectorRef,
-              private dataService: ApiDataService) {
+  constructor(private dataService: ApiDataService) {
   }
 
   ngOnInit(): void {
@@ -54,10 +49,9 @@ export class AutocompleteComponent implements OnInit {
       this.suggestionsInput$.pipe(
         tap(() => this.suggestionsLoading = true),
         debounceTime(300),
-        switchMap(term => this.dataService.getDaData(term).pipe(
-          catchError(() => of([])),
-          tap(() => this.suggestionsLoading = false)
-        ))
+        switchMap(term => this.dataService.getDaData(term)),
+        catchError(() => of([])),
+        tap(() => this.suggestionsLoading = false)
       )
     );
   }

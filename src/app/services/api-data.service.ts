@@ -21,7 +21,7 @@ export class ApiDataService {
     })
   };
 
-  getDaData(query: string = null): Observable<SuggestionInterface[]> {
+  getDaData(query: string): Observable<SuggestionInterface[]> {
     if (!query) { return of([]); }
 
     const body: BodyInterface  = {
